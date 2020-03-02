@@ -13,6 +13,17 @@ import soap.employee.EmployeeRequest;
 import soap.employee.EmployeeResponse;
 import soap.employee.ServiceStatus;
 
+import javax.xml.datatype.DatatypeConfigurationException;
+import javax.xml.datatype.DatatypeConstants;
+import javax.xml.datatype.DatatypeFactory;
+import javax.xml.datatype.XMLGregorianCalendar;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
+
 @Endpoint
 public class EmployeeContoller {
     private static final String NAMESPACE_URI = "employee.soap";
@@ -42,6 +53,8 @@ public class EmployeeContoller {
         } else {
             Employee employee = new Employee();
             BeanUtils.copyProperties(employeeDAO, employee);
+            employee.setBirthDate(requestEmployee.getBirthDate());
+            employee.setDateEntryCompany(requestEmployee.getDateEntryCompany());
             responseEmployee.setEmployee(employee);
             serviceStatus.setStatusCode("SUCCESS");
             serviceStatus.setMessage("Content Added Successfully");
